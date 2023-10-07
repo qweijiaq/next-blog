@@ -1,7 +1,29 @@
 import type { NextPage } from 'next';
+import styles from './index.module.scss';
+import { navs } from './config';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const Navbar: NextPage = () => {
-  return <div>我是 Navbar</div>;
+  const { pathname } = useRouter();
+  return (
+    <div className={styles.navbar}>
+      <section className={styles.logoArea}>NextBlog</section>
+      <section className={styles.linkArea}>
+        {navs?.map((nav) => {
+          return (
+            <Link
+              key={nav?.label}
+              href={nav?.value}
+              className={pathname === nav?.value ? styles.active : ''}
+            >
+              {nav?.label}
+            </Link>
+          );
+        })}
+      </section>
+    </div>
+  );
 };
 
 export default Navbar;
